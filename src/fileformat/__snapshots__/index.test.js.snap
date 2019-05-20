@@ -1,0 +1,223 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`get tile 1`] = `
+Object {
+  "buffer": Object {
+    "data": Array [
+      31,
+      139,
+      8,
+      0,
+      0,
+      0,
+      0,
+      0,
+      2,
+      3,
+      147,
+      138,
+      173,
+      96,
+      226,
+      226,
+      112,
+      244,
+      143,
+      55,
+      52,
+      212,
+      53,
+      49,
+      213,
+      104,
+      80,
+      144,
+      98,
+      73,
+      44,
+      74,
+      77,
+      148,
+      98,
+      73,
+      206,
+      79,
+      73,
+      149,
+      98,
+      201,
+      75,
+      204,
+      77,
+      85,
+      226,
+      230,
+      226,
+      52,
+      180,
+      176,
+      180,
+      48,
+      182,
+      52,
+      50,
+      49,
+      83,
+      226,
+      66,
+      168,
+      86,
+      98,
+      227,
+      98,
+      113,
+      202,
+      207,
+      206,
+      19,
+      146,
+      148,
+      96,
+      22,
+      98,
+      99,
+      96,
+      96,
+      100,
+      100,
+      98,
+      82,
+      226,
+      229,
+      124,
+      196,
+      126,
+      71,
+      76,
+      74,
+      65,
+      194,
+      80,
+      137,
+      89,
+      147,
+      31,
+      0,
+      216,
+      169,
+      196,
+      67,
+      95,
+      0,
+      0,
+      0,
+    ],
+    "type": "Buffer",
+  },
+  "content": Object {
+    "format": "pbf",
+  },
+  "contentType": "application/x-protobuf",
+  "link": "",
+  "pathSegments": Array [
+    3,
+    4,
+    2,
+  ],
+  "physicalDir": "./testdata/pbf.mbtiles",
+  "query": Object {},
+  "type": "mbtiles",
+}
+`;
+
+exports[`get z 1`] = `
+Object {
+  "canBrowse": true,
+  "content": Object {
+    "format": "pbf",
+  },
+  "files": Array [
+    Object {
+      "filesize": undefined,
+      "name": "0",
+    },
+    Object {
+      "filesize": undefined,
+      "name": "1",
+    },
+    Object {
+      "filesize": undefined,
+      "name": "2",
+    },
+    Object {
+      "filesize": undefined,
+      "name": "3",
+    },
+    Object {
+      "filesize": undefined,
+      "name": "4",
+    },
+  ],
+  "link": "",
+  "pathSegments": Array [],
+  "physicalDir": "./testdata/pbf.mbtiles",
+  "query": Object {},
+  "type": "mbtiles",
+}
+`;
+
+exports[`get zx 1`] = `
+Object {
+  "canBrowse": true,
+  "content": Object {
+    "format": "pbf",
+  },
+  "files": Array [
+    Object {
+      "filesize": undefined,
+      "name": "4",
+    },
+  ],
+  "link": "",
+  "pathSegments": Array [
+    3,
+  ],
+  "physicalDir": "./testdata/pbf.mbtiles",
+  "query": Object {},
+  "type": "mbtiles",
+}
+`;
+
+exports[`get zxy 1`] = `
+Object {
+  "canBrowse": true,
+  "content": Object {
+    "format": "pbf",
+  },
+  "files": Array [
+    Object {
+      "alternateFormats": Object {
+        "geojson": "2?format=geojson",
+        "pbfjson": "2?format=pbfjson",
+        "png": "2?format=png&border=rgba(128,128,128,0.2)&size=768&font=8px%20Tahoma&fontColor=rgba(0,0,0,0.3)&stroke=rgba(0,0,0,0.4)&antialias=none",
+      },
+      "filesize": 107,
+      "name": "2",
+    },
+  ],
+  "link": "",
+  "pathSegments": Array [
+    3,
+    4,
+  ],
+  "physicalDir": "./testdata/pbf.mbtiles",
+  "query": Object {},
+  "type": "mbtiles",
+}
+`;
+
+exports[`typeFromFileExt mbtiles 1`] = `"mbtiles"`;
+
+exports[`typeFromFileExt png 1`] = `"file"`;
+
+exports[`typeFromFileExt sqlite 1`] = `"sqlite"`;
