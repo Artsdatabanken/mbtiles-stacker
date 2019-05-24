@@ -8,7 +8,7 @@ class Mbtiles {
     if (options.createNew) if (fs.existsSync(dbPath)) fs.unlinkSync(dbPath);
 
     const exists = fs.existsSync(dbPath);
-    this.db = new Database(dbPath, {});
+    this.db = new Database(dbPath, { verbose: console.log });
     if (!exists) createSchema(this.db);
   }
 
@@ -31,6 +31,8 @@ class Mbtiles {
     const row = tileCoord.y;
     const column = tileCoord.x;
     let dbRow = Math.pow(2, zoom) - 1 - row;
+    const args = [zoom, column, dbRow];
+    // const args = { zoom_level: zoom, tile_column: column, tile_row: dbRow };
     log.info(`Read tile ${zoom},${column},${dbRow}`);
     const record = this.getCommand().get(zoom, column, dbRow);
     return record.tile_data;

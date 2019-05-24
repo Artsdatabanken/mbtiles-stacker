@@ -1,19 +1,5 @@
 const tileproxy = require("./tileproxy");
-
-const config = {
-  topo4p: {
-    stack: ["topo4"]
-  },
-  topo4: {
-    minzoom: 2,
-    maxzoom: 20,
-    url:
-      "https://data.artsdatabanken.no/Natur_i_Norge/Landskap/raster_indexed.3857.mbtiles/{z}/{y}/{x}",
-    cache: {
-      type: "mbtiles"
-    }
-  }
-};
+const config = require("../config");
 
 class Index {
   constructor(rootDir) {
@@ -25,7 +11,10 @@ class Index {
     const layerName = segments.shift();
     const layer = config[layerName];
     if (!layer) return null;
-    const z = segments.shift();
+    /*  const z = parseInt(segments.shift());
+    const y = parseInt(segments.shift());
+    const x = parseInt(segments.shift());
+   */ const z = segments.shift();
     const y = segments.shift();
     const x = segments.shift();
     const coords = { z, x, y };
@@ -45,7 +34,9 @@ class Index {
       fileRelPath: "",
       pathSegments: segments,
       type: "directory",
-      query: query
+      query: query,
+      contentType: "image/png",
+      buffer: r[0]
     };
 
     return cursor;

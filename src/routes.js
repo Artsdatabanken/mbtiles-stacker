@@ -1,7 +1,11 @@
 const { browse } = require("./html");
 const { getCompression } = require("./fileformat/mbtiles/pbf/protobuf");
+const config = require("./config");
 
 module.exports = function(app, index) {
+  app.get("/", res => {
+    res.send(config);
+  });
   app.get("*?", (req, res, next) => {
     index
       .get(decodeURIComponent(req.path), req.query)

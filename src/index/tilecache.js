@@ -8,9 +8,10 @@ async function get(layer, coords, fallback) {
   return tile;
 }
 
-function getTile(layer, coords) {
-  const db = new Mbtiles(layer.name + ".mbtiles");
-  return db.getTile(coords);
+async function getTile(layer, coords) {
+  const path = "./" + layer.name + ".mbtiles";
+  const db = new Mbtiles(path);
+  return await db.getTile(coords);
 }
 
 function putTile(layer, coords, tile) {
