@@ -1,6 +1,7 @@
 const Jimp = require("jimp");
 
 async function stackImages(imagearray) {
+  if (imagearray.length === 1) return imagearray[0];
   const stack = await readImages(imagearray);
   rescale(stack);
   const base = stack.images.shift();
@@ -24,7 +25,6 @@ function rescale(stack) {
 }
 
 async function readImages(imagearray) {
-  if (imagearray.length === 1) return imagearray[0];
   const r = { width: 99999, height: 99999 };
   r.images = [];
   for (var i = 0; i < imagearray.length; i++) {

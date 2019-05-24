@@ -1,11 +1,37 @@
 {
   "topo4p": {
-    "stack": ["europa", "topo4"]
+    "stack": ["topo4graatone"]
+  },
+
+  "topo4graatone": {
+    "minzoom": 2,
+    "maxzoom": 20,
+    "url": "http://opencache.statkart.no/gatekeeper/gk/gk.open_gmaps?layers=topo4graatone&zoom={z}&x={x}&y={y}",
+    "cache": {
+      "type": "mbtiles"
+    }
+  },
+
+  "bakgrunnskart_forenklet": {
+    "minzoom": 2,
+    "maxzoom": 20,
+    "url": "http://opencache.statkart.no/gatekeeper/gk/gk.open_gmaps?layers=bakgrunnskart_forenklet&zoom={z}&x={x}&y={y}",
+    "cache": {
+      "type": "mbtiles"
+    }
   },
   "europa": {
     "minzoom": 2,
     "maxzoom": 20,
     "url": "http://opencache.statkart.no/gatekeeper/gk/gk.open_gmaps?layers=europa&zoom={z}&x={x}&y={y}",
+    "cache": {
+      "type": "mbtiles"
+    }
+  },
+  "egk": {
+    "minzoom": 2,
+    "maxzoom": 20,
+    "url": "http://opencache.statkart.no/gatekeeper/gk/gk.open_gmaps?layers=egk&zoom={z}&x={x}&y={y}",
     "cache": {
       "type": "mbtiles"
     }
