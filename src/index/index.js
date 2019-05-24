@@ -12,19 +12,21 @@ class Index {
     const layer = config[layerName];
     if (!layer) return null;
     const z = segments.shift();
-    const y = segments.shift();
     const x = segments.shift();
+    const y = segments.shift();
     const coords = { z, x, y };
     const r = [];
     const tasks = [];
     for (var i = 0; i < layer.stack.length; i++) {
       let sublayerName = layer.stack[i];
       const sublayer = config[sublayerName];
+      if (!sublayer)
+        throw new Error("Can't find layer definition for " + sublayerName);
       sublayer.name = sublayerName;
+      sublayer.adjust = sublayer.adjust || {};
       tasks.push(this.download(sublayer, coords, i, r));
     }
-    const xxx = await Promise.all(tasks);
-    console.log(xxx);
+    await Promise.all(tasks);
 
     const img = await stackImages(r);
 
@@ -43,8 +45,7 @@ class Index {
 
   async download(layer, coords, i, r) {
     const img = await tileproxy.get(layer, coords);
-    r[i] = img;
-    return img;
+    r[i] = { image: img, ...layer };
   }
 
   parsePath(relativePath) {
