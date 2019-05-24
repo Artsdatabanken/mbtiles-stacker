@@ -8,7 +8,9 @@ class Mbtiles {
     if (options.createNew) if (fs.existsSync(dbPath)) fs.unlinkSync(dbPath);
 
     const exists = fs.existsSync(dbPath);
-    this.db = new Database(dbPath, { verbose: console.log });
+    this.db = new Database(dbPath, {
+      /*verbose: console.log*/
+    });
     if (!exists) createSchema(this.db);
   }
 
