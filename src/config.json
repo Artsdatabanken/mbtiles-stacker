@@ -1,11 +1,19 @@
 {
   "topo4p": {
-    "stack": ["world_countries", "topo4"]
+    "stack": ["europa", "topo4"]
+  },
+  "europa": {
+    "minzoom": 2,
+    "maxzoom": 20,
+    "url": "http://opencache.statkart.no/gatekeeper/gk/gk.open_gmaps?layers=europa&zoom={z}&x={x}&y={y}",
+    "cache": {
+      "type": "mbtiles"
+    }
   },
   "topo4": {
     "minzoom": 2,
     "maxzoom": 20,
-    "url": "https://data.artsdatabanken.no/Natur_i_Norge/Landskap/raster_indexed.3857.mbtiles/{z}/{y}/{x}",
+    "url": "http://opencache.statkart.no/gatekeeper/gk/gk.open_gmaps?layers=topo4&zoom={z}&x={x}&y={y}",
     "cache": {
       "type": "mbtiles"
     }

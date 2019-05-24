@@ -1,5 +1,4 @@
 const Jimp = require("jimp");
-const fetch = require("node-fetch");
 const tilecache = require("./tilecache");
 
 async function get(layer, coords) {
@@ -11,8 +10,8 @@ async function download(layer, coords) {
   url = url.replace("{z}", coords.z);
   url = url.replace("{y}", coords.y);
   url = url.replace("{x}", coords.x);
+  console.log(url);
   const image = await Jimp.read(url);
-  ///  const r = await fetch(url);
   return image;
 }
 

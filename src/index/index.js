@@ -11,10 +11,7 @@ class Index {
     const layerName = segments.shift();
     const layer = config[layerName];
     if (!layer) return null;
-    /*  const z = parseInt(segments.shift());
-    const y = parseInt(segments.shift());
-    const x = parseInt(segments.shift());
-   */ const z = segments.shift();
+    const z = segments.shift();
     const y = segments.shift();
     const x = segments.shift();
     const coords = { z, x, y };

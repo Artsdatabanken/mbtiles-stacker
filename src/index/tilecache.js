@@ -1,7 +1,7 @@
 const Mbtiles = require("../fileformat/mbtiles/mbtiles");
 
 async function get(layer, coords, fallback) {
-  let tile = getTile(layer, coords);
+  let tile = await getTile(layer, coords);
   if (tile) return tile;
   tile = await fallback(layer, coords);
   putTile(layer, coords, tile);
@@ -11,7 +11,9 @@ async function get(layer, coords, fallback) {
 async function getTile(layer, coords) {
   const path = "./" + layer.name + ".mbtiles";
   const db = new Mbtiles(path);
-  return await db.getTile(coords);
+  const tile = await db.getTile(coords);
+  db.close();
+  return tile;
 }
 
 function putTile(layer, coords, tile) {

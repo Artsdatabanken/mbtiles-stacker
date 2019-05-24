@@ -12,6 +12,10 @@ class Mbtiles {
     if (!exists) createSchema(this.db);
   }
 
+  close() {
+    this.db.close();
+  }
+
   getCommand() {
     if (this.getcmd) return this.getcmd;
     this.getcmd = this.db.prepare(
@@ -30,18 +34,23 @@ class Mbtiles {
     const zoom = tileCoord.z;
     const row = tileCoord.y;
     const column = tileCoord.x;
-    let dbRow = Math.pow(2, zoom) - 1 - row;
-    const args = [zoom, column, dbRow];
-    // const args = { zoom_level: zoom, tile_column: column, tile_row: dbRow };
+    let dbRow = (Math.pow(2, zoom) - 1 - row).toString();
     log.info(`Read tile ${zoom},${column},${dbRow}`);
     const record = this.getCommand().get(zoom, column, dbRow);
-    return record.tile_data;
+    return record && record.tile_data;
   }
 
   async writeTile(tileCoord, png) {
-    const row = (2 << (tileCoord.z - 1)) - 1 - tileCoord.y;
+    const zoom = tileCoord.z;
+    const row = tileCoord.y;
+    const column = tileCoord.x;
+    let dbRow = (Math.pow(2, zoom) - 1 - row).toString();
     const buffer = await png.getBufferAsync(Jimp.MIME_PNG);
-    this.putCommand().run(tileCoord.z, tileCoord.x, row, buffer);
+    try {
+      this.putCommand().run(zoom, column, dbRow, buffer);
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   writeMetadata(meta) {

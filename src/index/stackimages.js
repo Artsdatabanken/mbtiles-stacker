@@ -6,9 +6,9 @@ async function stackImages(imagearray) {
   const base = stack.images.shift();
   stack.images.forEach(img => {
     base.composite(img, 0, 0, {
-      mode: Jimp.BLEND_MULTIPLY,
-      opacitySource: 0.5,
-      opacityDest: 0.9
+      mode: Jimp.BLEND_SOURCE_OVER,
+      opacitySource: 1,
+      opacityDest: 1
     });
   });
   return await base.getBufferAsync(Jimp.MIME_PNG);
