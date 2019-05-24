@@ -1,6 +1,6 @@
 const tileproxy = require("./tileproxy");
 const config = require("../config");
-
+const stackImages = require("./stackimages");
 class Index {
   constructor(rootDir) {
     this.rootDir = rootDir;
@@ -29,6 +29,8 @@ class Index {
     const xxx = await Promise.all(tasks);
     console.log(xxx);
 
+    const img = await stackImages(r);
+
     const cursor = {
       physicalDir: this.rootDir,
       fileRelPath: "",
@@ -36,7 +38,7 @@ class Index {
       type: "directory",
       query: query,
       contentType: "image/png",
-      buffer: r[0]
+      buffer: img
     };
 
     return cursor;

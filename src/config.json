@@ -1,8 +1,16 @@
 {
   "topo4p": {
-    "stack": ["topo4"]
+    "stack": ["world_countries", "topo4"]
   },
   "topo4": {
+    "minzoom": 2,
+    "maxzoom": 20,
+    "url": "https://data.artsdatabanken.no/Natur_i_Norge/Landskap/raster_indexed.3857.mbtiles/{z}/{y}/{x}",
+    "cache": {
+      "type": "mbtiles"
+    }
+  },
+  "world_countries": {
     "minzoom": 2,
     "maxzoom": 20,
     "url": "https://data.artsdatabanken.no/Natur_i_Norge/Landskap/raster_indexed.3857.mbtiles/{z}/{y}/{x}",
