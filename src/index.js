@@ -1,5 +1,4 @@
 const config = require("../data/config");
-const stackImages = require("./stackimages");
 const renderStackLevel = require("./renderstacklevel");
 
 class Index {
