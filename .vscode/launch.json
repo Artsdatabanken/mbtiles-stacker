@@ -17,6 +17,17 @@
       "name": "Unit test",
       "program": "${workspaceFolder}/node_modules/.bin/jest",
       "args": ["./**/*.js"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "nodemon",
+      "runtimeExecutable": "${workspaceFolder}/node_modules/nodemon/bin/nodemon.js",
+      "program": "${workspaceFolder}/index.js",
+      "restart": true,
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "args": ["--port", "8000", "data/"]
     }
   ]
 }
