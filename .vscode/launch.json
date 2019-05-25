@@ -27,7 +27,7 @@
       "restart": true,
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
-      "args": ["--port", "8004", "data/"]
+      "args": ["--port", "8006", "data/"]
     }
   ]
 }

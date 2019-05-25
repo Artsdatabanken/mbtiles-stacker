@@ -19,8 +19,8 @@ async function stack(config, layer, coords) {
 }
 
 async function download(config, layer, coords, i, r) {
-  const img = await tileproxy.getTile(config, layer, coords);
-  r[i] = { image: img, ...layer };
+  const tile = await tileproxy.getTile(config, layer, coords);
+  r[i] = { ...tile, ...layer };
 }
 
 module.exports = stack;

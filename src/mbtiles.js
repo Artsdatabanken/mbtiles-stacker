@@ -41,21 +41,29 @@ class Mbtiles {
     const dbRow = dbrow(zoom, row);
     const record = this.getCommand().get(zoom, column, dbRow);
     if (record) log.info(`Found ${this.db.name}/${zoom},${column},${dbRow}`);
-    return record && record.tile_data;
+    return record && new Buffer(record.tile_data);
   }
 
-  async writeTile(tileCoord, png) {
+  async writeTile(tileCoord, arrayBuffer) {
     const zoom = tileCoord.z;
     const row = tileCoord.y;
     const column = tileCoord.x;
     const dbRow = dbrow(zoom, row);
-    png.getBufferAsync(Jimp.MIME_PNG).then(buffer => {
-      try {
-        this.putCommand().run(zoom, column, dbRow, buffer);
-      } catch (e) {
-        console.error(`/${zoom}/${column}/${dbRow}: ${e}`);
-      }
-    });
+    const buffer = arrayBuffer;
+    try {
+      this.putCommand().run(zoom, column, dbRow, buffer);
+    } catch (e) {
+      console.error(`/${zoom}/${column}/${dbRow}: ${e}`);
+    }
+  }
+
+  arrayBufferToBuffer(ab) {
+    var buffer = new Buffer(ab.byteLength);
+    var view = new Uint8Array(ab);
+    for (var i = 0; i < buffer.length; ++i) {
+      buffer[i] = view[i];
+    }
+    return buffer;
   }
 
   writeMetadata(meta) {

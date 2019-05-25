@@ -1,4 +1,3 @@
-const Jimp = require("jimp");
 const log = require("log-less-fancy")();
 const fetch = require("node-fetch");
 
@@ -9,7 +8,7 @@ async function download(config, layer, coords) {
   url = url.replace("{x}", coords.x);
   log.info(url);
   try {
-    return await fetchImage(url);
+    return { buffer: await fetchImage(url) };
   } catch (e) {
     throw new Error(e);
   }
@@ -20,7 +19,7 @@ async function fetchImage(url) {
   if (response.status !== 200)
     throw new Error(`HTTP ${response.status}: ${url}`);
   const buff = await response.buffer();
-  return Jimp.read(buff);
+  return buff;
 }
 
 module.exports = download;

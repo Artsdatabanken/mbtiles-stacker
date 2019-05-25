@@ -1,4 +1,3 @@
-const Jimp = require("jimp");
 const config = require("../data/config");
 const tileproxy = require("./tileproxy");
 const functions = require("./functions");
@@ -10,20 +9,16 @@ async function get(path) {
   const layerName = segments.shift();
   let layer = config[layerName];
   if (!layer) return null;
+  layer.name = layerName;
   const z = segments.shift();
   const x = segments.shift();
   const y = segments.shift();
   const coords = { z, x, y };
-  layer.name = layerName;
-  const img = await tileproxy.getTile(config, layer, coords);
-  const buffer = img.getBufferAsync
-    ? await img.getBufferAsync(Jimp.MIME_PNG)
-    : img;
-  if (!buffer) return null;
+  const tile = await tileproxy.getTile(config, layer, coords);
+  if (!tile) return null;
   const cursor = {
-    physicalDir: this.rootDir,
     contentType: "image/png",
-    buffer: buffer
+    buffer: tile.buffer
   };
   return cursor;
 }

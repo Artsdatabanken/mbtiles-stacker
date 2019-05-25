@@ -1,12 +1,13 @@
 const config = require("../data/config");
+const tilestacker = require("./tilestacker");
 
-module.exports = function(app, index) {
+module.exports = function(app) {
   app.get("/", res => {
     res.send(config);
   });
   app.get("*?", (req, res, next) => {
-    index
-      .get(decodeURIComponent(req.path), req.query)
+    tilestacker
+      .get(decodeURIComponent(req.path))
       .then(node => {
         if (!node) return next();
         if (!node.contentType) return next();

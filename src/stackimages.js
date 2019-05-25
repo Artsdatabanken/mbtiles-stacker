@@ -12,7 +12,10 @@ async function stackImages(tiles) {
       opacityDest: 1
     });
   });
-  return base.image;
+  return {
+    image: base.image,
+    buffer: await base.image.getBufferAsync(Jimp.MIME_PNG)
+  };
 }
 
 function adjust(stack) {
@@ -79,7 +82,7 @@ async function readImages(tiles) {
   r.images = [];
   for (var i = 0; i < tiles.length; i++) {
     const tile = tiles[i];
-    const image = await Jimp.read(tile.image);
+    const image = await Jimp.read(tile.buffer);
     r.width = Math.min(r.width, image.bitmap.width);
     r.height = Math.min(r.height, image.bitmap.height);
     r.images[i] = { ...tile, image: image };
