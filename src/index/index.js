@@ -9,7 +9,7 @@ class Index {
   async get(path, query) {
     const segments = this.parsePath(path);
     const layerName = segments.shift();
-    const layer = config[layerName];
+    let layer = config[layerName];
     if (!layer) return null;
     const z = segments.shift();
     const x = segments.shift();
@@ -17,8 +17,9 @@ class Index {
     const coords = { z, x, y };
     const r = [];
     const tasks = [];
-    for (var i = 0; i < layer.stack.length; i++) {
-      let sublayerName = layer.stack[i];
+    if (layer.mode !== "stack") layer = { layers: [layerName] };
+    for (var i = 0; i < layer.layers.length; i++) {
+      let sublayerName = layer.layers[i];
       const sublayer = config[sublayerName];
       if (!sublayer)
         throw new Error("Can't find layer definition for " + sublayerName);
