@@ -1,6 +1,6 @@
 const { browse } = require("./html");
 const { getCompression } = require("./fileformat/mbtiles/pbf/protobuf");
-const config = require("./config");
+const config = require("../data/config");
 
 module.exports = function(app, index) {
   app.get("/", res => {
