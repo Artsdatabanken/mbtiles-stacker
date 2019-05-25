@@ -40,15 +40,9 @@ app.use(function(req, res, next) {
 
 const port = argv.port || 8000;
 const rootDirectory = path.resolve(argv._[0] || ".");
-const staticDirs = ["static", rootDirectory];
-const oneDay = 86400000;
 
 const index = new Index(rootDirectory);
 routes(app, index);
-
-staticDirs.forEach(dir =>
-  app.use(express.static(dir, { maxAge: oneDay, immutable: true }))
-);
 
 app.listen(port, () => {
   log.info("Server root directory " + rootDirectory);
