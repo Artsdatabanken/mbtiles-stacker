@@ -16,7 +16,7 @@ class Index {
     const y = segments.shift();
     const coords = { z, x, y };
 
-    const img = await this.renderLayer(config, layer, coords);
+    const img = await this.renderStackLevel(config, layer, coords);
     const cursor = {
       physicalDir: this.rootDir,
       contentType: "image/png",
@@ -25,7 +25,7 @@ class Index {
     return cursor;
   }
 
-  async renderLayer(config, layer, coords) {
+  async renderStackLevel(config, layer, coords) {
     const r = [];
     const tasks = [];
     for (var i = 0; i < layer.layers.length; i++) {
