@@ -6,7 +6,7 @@ class Index {
     this.rootDir = rootDir;
   }
 
-  async get(path, query) {
+  async get(path) {
     const segments = this.parsePath(path);
     const layerName = segments.shift();
     let layer = config[layerName];
