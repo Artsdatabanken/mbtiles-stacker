@@ -49,12 +49,13 @@ class Mbtiles {
     const row = tileCoord.y;
     const column = tileCoord.x;
     const dbRow = dbrow(zoom, row);
-    const buffer = await png.getBufferAsync(Jimp.MIME_PNG);
-    try {
-      this.putCommand().run(zoom, column, dbRow, buffer);
-    } catch (e) {
-      console.error(`/${zoom}/${column}/${dbRow}: ${e}`);
-    }
+    png.getBufferAsync(Jimp.MIME_PNG).then(buffer => {
+      try {
+        this.putCommand().run(zoom, column, dbRow, buffer);
+      } catch (e) {
+        console.error(`/${zoom}/${column}/${dbRow}: ${e}`);
+      }
+    });
   }
 
   writeMetadata(meta) {

@@ -12,7 +12,7 @@ async function stackImages(tiles) {
       opacityDest: 1
     });
   });
-  return await base.image.getBufferAsync(Jimp.MIME_PNG);
+  return base.image;
 }
 
 function adjust(stack) {

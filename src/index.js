@@ -1,9 +1,12 @@
+const Jimp = require("jimp");
 const config = require("../data/config");
-const renderStackLevel = require("./renderstacklevel");
+const tileproxy = require("./tileproxy");
+const functions = require("./functions");
 
 class Index {
   constructor(rootDir) {
     this.rootDir = rootDir;
+    config.getModeFunction = functions.getModeFunction;
   }
 
   async get(path) {
@@ -15,12 +18,16 @@ class Index {
     const x = segments.shift();
     const y = segments.shift();
     const coords = { z, x, y };
-
-    const img = await renderStackLevel(config, layer, coords);
+    layer.name = layerName;
+    const img = await tileproxy.getTile(config, layer, coords);
+    const buffer = img.getBufferAsync
+      ? await img.getBufferAsync(Jimp.MIME_PNG)
+      : img;
+    if (!buffer) return null;
     const cursor = {
       physicalDir: this.rootDir,
       contentType: "image/png",
-      buffer: img
+      buffer: buffer
     };
     return cursor;
   }
