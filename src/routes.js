@@ -1,4 +1,3 @@
-const { browse } = require("./html");
 const { getCompression } = require("./fileformat/mbtiles/pbf/protobuf");
 const config = require("../data/config");
 
