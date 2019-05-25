@@ -9,11 +9,8 @@ module.exports = function(app, index) {
       .get(decodeURIComponent(req.path), req.query)
       .then(node => {
         if (!node) return next();
-        if (node.canBrowse) browse(node, req.path);
         if (!node.contentType) return next();
         res.setHeader("Content-Type", node.contentType);
-        if (!node.buffer) return res.sendFile(node.physicalDir);
-
         res.send(node.buffer);
       })
       .catch(err => {
