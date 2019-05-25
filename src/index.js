@@ -1,5 +1,5 @@
 const tileproxy = require("./tileproxy");
-const config = require("../../data/config");
+const config = require("../data/config");
 const stackImages = require("./stackimages");
 class Index {
   constructor(rootDir) {
