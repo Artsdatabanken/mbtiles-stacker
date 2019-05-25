@@ -1,4 +1,3 @@
-const Jimp = require("jimp");
 const log = require("log-less-fancy")();
 const Database = require("better-sqlite3");
 const fs = require("fs");
@@ -55,15 +54,6 @@ class Mbtiles {
     } catch (e) {
       console.error(`/${zoom}/${column}/${dbRow}: ${e}`);
     }
-  }
-
-  arrayBufferToBuffer(ab) {
-    var buffer = new Buffer(ab.byteLength);
-    var view = new Uint8Array(ab);
-    for (var i = 0; i < buffer.length; ++i) {
-      buffer[i] = view[i];
-    }
-    return buffer;
   }
 
   writeMetadata(meta) {
