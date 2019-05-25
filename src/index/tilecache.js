@@ -1,4 +1,4 @@
-const Mbtiles = require("../fileformat/mbtiles/mbtiles");
+const Mbtiles = require("../mbtiles");
 
 async function get(layer, coords, fallback) {
   let tile = await getTile(layer, coords);
