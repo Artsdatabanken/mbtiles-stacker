@@ -3,6 +3,8 @@ const log = require("log-less-fancy")();
 const Database = require("better-sqlite3");
 const fs = require("fs");
 
+const dbrow = (zoom, row) => (Math.pow(2, zoom) - 1 - row).toString();
+
 class Mbtiles {
   constructor(dbPath, options = {}) {
     if (options.createNew) if (fs.existsSync(dbPath)) fs.unlinkSync(dbPath);
@@ -36,9 +38,10 @@ class Mbtiles {
     const zoom = tileCoord.z;
     const row = tileCoord.y;
     const column = tileCoord.x;
-    let dbRow = (Math.pow(2, zoom) - 1 - row).toString();
+    const dbRow = dbrow(zoom, row);
     log.info(`Read tile ${zoom},${column},${dbRow}`);
     const record = this.getCommand().get(zoom, column, dbRow);
+    console.log(`Read tile /${zoom}/${column}/${dbRow}: ${!!record}`);
     return record && record.tile_data;
   }
 
@@ -46,12 +49,12 @@ class Mbtiles {
     const zoom = tileCoord.z;
     const row = tileCoord.y;
     const column = tileCoord.x;
-    let dbRow = (Math.pow(2, zoom) - 1 - row).toString();
+    const dbRow = dbrow(zoom, row);
     const buffer = await png.getBufferAsync(Jimp.MIME_PNG);
     try {
       this.putCommand().run(zoom, column, dbRow, buffer);
     } catch (e) {
-      console.error(e);
+      console.error(`/${zoom}/${column}/${dbRow}: ${e}`);
     }
   }
 
