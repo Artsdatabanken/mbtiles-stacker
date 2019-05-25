@@ -39,9 +39,8 @@ class Mbtiles {
     const row = tileCoord.y;
     const column = tileCoord.x;
     const dbRow = dbrow(zoom, row);
-    log.info(`Read tile ${zoom},${column},${dbRow}`);
     const record = this.getCommand().get(zoom, column, dbRow);
-    console.log(`Read tile /${zoom}/${column}/${dbRow}: ${!!record}`);
+    if (record) log.info(`Found ${this.db.name}/${zoom},${column},${dbRow}`);
     return record && record.tile_data;
   }
 
