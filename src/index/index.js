@@ -15,9 +15,19 @@ class Index {
     const x = segments.shift();
     const y = segments.shift();
     const coords = { z, x, y };
+
+    const img = await this.renderLayer(config, layer, coords);
+    const cursor = {
+      physicalDir: this.rootDir,
+      contentType: "image/png",
+      buffer: img
+    };
+    return cursor;
+  }
+
+  async renderLayer(config, layer, coords) {
     const r = [];
     const tasks = [];
-    if (layer.mode !== "stack") layer = { layers: [layerName] };
     for (var i = 0; i < layer.layers.length; i++) {
       let sublayerName = layer.layers[i];
       const sublayer = config[sublayerName];
@@ -29,14 +39,7 @@ class Index {
     }
     await Promise.all(tasks);
     const img = await stackImages(r);
-
-    const cursor = {
-      physicalDir: this.rootDir,
-      contentType: "image/png",
-      buffer: img
-    };
-
-    return cursor;
+    return img;
   }
 
   async download(layer, coords, i, r) {
