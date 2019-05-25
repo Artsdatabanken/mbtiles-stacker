@@ -1,6 +1,7 @@
-const tileproxy = require("./tileproxy");
 const config = require("../data/config");
 const stackImages = require("./stackimages");
+const renderStackLevel = require("./renderstacklevel");
+
 class Index {
   constructor(rootDir) {
     this.rootDir = rootDir;
@@ -16,35 +17,13 @@ class Index {
     const y = segments.shift();
     const coords = { z, x, y };
 
-    const img = await this.renderStackLevel(config, layer, coords);
+    const img = await renderStackLevel(config, layer, coords);
     const cursor = {
       physicalDir: this.rootDir,
       contentType: "image/png",
       buffer: img
     };
     return cursor;
-  }
-
-  async renderStackLevel(config, layer, coords) {
-    const r = [];
-    const tasks = [];
-    for (var i = 0; i < layer.layers.length; i++) {
-      let sublayerName = layer.layers[i];
-      const sublayer = config[sublayerName];
-      if (!sublayer)
-        throw new Error("Can't find layer definition for " + sublayerName);
-      sublayer.name = sublayerName;
-      sublayer.adjust = sublayer.adjust || {};
-      tasks.push(this.download(sublayer, coords, i, r));
-    }
-    await Promise.all(tasks);
-    const img = await stackImages(r);
-    return img;
-  }
-
-  async download(layer, coords, i, r) {
-    const img = await tileproxy.get(layer, coords);
-    r[i] = { image: img, ...layer };
   }
 
   parsePath(relativePath) {
