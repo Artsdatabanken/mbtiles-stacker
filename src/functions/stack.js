@@ -3,7 +3,7 @@ const tileproxy = require("../tileproxy");
 
 async function stack(config, layer, coords) {
   const r = [];
-  const tasks = [];
+  const fetches = [];
   for (var i = 0; i < layer.layers.length; i++) {
     let sublayerName = layer.layers[i];
     const sublayer = config[sublayerName];
@@ -11,9 +11,9 @@ async function stack(config, layer, coords) {
       throw new Error("Can't find layer definition for " + sublayerName);
     sublayer.name = sublayerName;
     sublayer.adjust = sublayer.adjust || {};
-    tasks.push(download(config, sublayer, coords, i, r));
+    fetches.push(download(config, sublayer, coords, i, r));
   }
-  await Promise.all(tasks);
+  await Promise.all(fetches);
   const img = await stackImages(r);
   return img;
 }
