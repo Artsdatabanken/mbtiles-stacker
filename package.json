@@ -21,7 +21,6 @@
     "start": "node index.js --port 8000 data/",
     "debug": "nodemon -r esm --inspect-brk --inspect=0.0.0.0:9229 index.js --port 8000",
     "commit": "npx git-cz",
-    "test": "jest --coverage",
     "report-coverage": "coveralls < coverage/lcov.info"
   },
   "dependencies": {

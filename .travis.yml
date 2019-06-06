@@ -12,8 +12,6 @@ services:
 cache:
   directories:
     - ~/.npm
-script:
-#  - yarn test
 deploy:
   skip_cleanup: true
   provider: script
