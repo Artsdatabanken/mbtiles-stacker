@@ -2,7 +2,7 @@ const tilestacker = require("./tilestacker");
 
 module.exports = function(app, config) {
   app.get("/", (req, res) => {
-    res.send(config);
+    res.send(config.json);
   });
   app.get("*?", (req, res, next) => {
     tilestacker

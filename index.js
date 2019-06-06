@@ -3,7 +3,7 @@ const log = require("log-less-fancy")();
 const minimist = require("minimist");
 const routes = require("./src/routes");
 const pjson = require("./package.json");
-
+const path = require("path");
 var argv = minimist(process.argv.slice(2), { alias: { p: "port" } });
 if (argv._.length !== 1) {
   console.log("Usage: node index.js [options] [rootDirectory]");
@@ -18,8 +18,8 @@ if (argv._.length !== 1) {
 }
 
 const app = express();
-console.log(argv._);
-const config = require(argv._[0] + "/config");
+const config = { dataDirectory: path.resolve(argv._[0]) };
+config.json = require(path.join(config.dataDirectory, "config"));
 
 app.use(function(req, res, next) {
   res.header("X-Powered-By", "mbtiles-stacker v" + pjson.version);

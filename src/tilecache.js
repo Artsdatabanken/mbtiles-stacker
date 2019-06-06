@@ -1,25 +1,27 @@
 const Mbtiles = require("./mbtiles");
+const path = require("path");
+
+const tilepath = (dataDirectory, layerName) =>
+  path.join(dataDirectory, layerName + ".mbtiles");
 
 async function getTile(config, layer, coords, fallback) {
-  let tile = await dbGetTile(layer.name, coords);
+  const path = tilepath(config.dataDirectory, layer.name);
+  console.log(path);
+  let tile = await dbGetTile(path, coords);
   if (tile) return tile;
-  tile = await fallback(config, layer, coords);
-  await putTile(layer.name, coords, tile.buffer);
+  tile = await fallback(config.json, layer, coords);
+  await putTile(path, coords, tile.buffer);
   return tile;
 }
 
-const tilepath = layerName => "./data/" + layerName + ".mbtiles";
-
-async function dbGetTile(layerName, coords) {
-  const path = tilepath(layerName);
+async function dbGetTile(path, coords) {
   const db = new Mbtiles(path);
   const buffer = await db.getTile(coords);
   db.close();
   return buffer && { buffer: buffer };
 }
 
-async function putTile(layerName, coords, buffer) {
-  const path = tilepath(layerName);
+async function putTile(path, coords, buffer) {
   const db = new Mbtiles(path);
   db.writeTile(coords, buffer);
 }

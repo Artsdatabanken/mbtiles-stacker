@@ -4,7 +4,7 @@ const functions = require("./functions");
 async function get(path, config) {
   config.getModeFunction = functions.getModeFunction;
   const { layerName, coords } = decodePath(path);
-  let layer = config[layerName];
+  let layer = config.json[layerName];
   if (!layer) return null;
   layer.name = layerName;
   const tile = await tileproxy.getTile(config, layer, coords);
