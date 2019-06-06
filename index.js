@@ -18,6 +18,8 @@ if (argv._.length !== 1) {
 }
 
 const app = express();
+console.log(argv._);
+const config = require(argv._[0] + "/config");
 
 app.use(function(req, res, next) {
   res.header("X-Powered-By", "mbtiles-stacker v" + pjson.version);
@@ -38,7 +40,7 @@ app.use(function(req, res, next) {
 
 const port = argv.port || 8000;
 
-routes(app);
+routes(app, config);
 
 app.listen(port, () => {
   log.info("Server listening on port " + port);

@@ -1,30 +1,35 @@
-const config = require("../data/config");
 const tileproxy = require("./tileproxy");
 const functions = require("./functions");
 
-config.getModeFunction = functions.getModeFunction;
-
-async function get(path) {
+async function get(path, config) {
+  config.getModeFunction = functions.getModeFunction;
+  console.log(new Date(), path);
   const { layerName, coords } = decodePath(path);
   let layer = config[layerName];
   if (!layer) return null;
   layer.name = layerName;
   const tile = await tileproxy.getTile(config, layer, coords);
   if (!tile) return null;
-  return {
-    contentType: "image/png",
-    buffer: tile.buffer
-  };
+  console.log("--", path);
+  tile.contentType = "image/png";
+  return tile;
 }
 
 function decodePath(path) {
   const segments = parsePath(path);
   const layerName = segments.shift();
-  const z = segments.shift();
-  const x = segments.shift();
-  const y = segments.shift();
-  const coords = { z, x, y };
+  const coords = {
+    z: readInt(segments, 0),
+    x: readInt(segments, 1),
+    y: readInt(segments, 2)
+  };
   return { layerName, coords };
+}
+
+function readInt(segments, index) {
+  const v = parseInt(segments[index]);
+  if (!v) throw new Error("Bad arguments");
+  return v;
 }
 
 function parsePath(relativePath) {

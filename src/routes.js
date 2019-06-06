@@ -1,7 +1,6 @@
-const config = require("../data/config");
 const tilestacker = require("./tilestacker");
 
-module.exports = function(app) {
+module.exports = function(app, config) {
   app.get("/", res => {
     res.send(config);
   });
