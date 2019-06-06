@@ -17,7 +17,6 @@ function decodePath(path) {
   const segments = parsePath(path);
   if (segments.length !== 4) return {};
   const layerName = segments.shift();
-  console.log(segments);
   const coords = {
     z: readInt(segments, 0),
     x: readInt(segments, 1),

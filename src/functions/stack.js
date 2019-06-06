@@ -6,7 +6,7 @@ async function stack(config, layer, coords) {
   const fetches = [];
   for (var i = 0; i < layer.layers.length; i++) {
     let sublayerName = layer.layers[i];
-    const sublayer = config[sublayerName];
+    const sublayer = config.json[sublayerName];
     if (!sublayer)
       throw new Error("Can't find layer definition for " + sublayerName);
     sublayer.name = sublayerName;

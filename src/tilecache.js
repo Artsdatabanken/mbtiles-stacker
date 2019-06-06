@@ -9,7 +9,7 @@ async function getTile(config, layer, coords, fallback) {
   console.log(path);
   let tile = await dbGetTile(path, coords);
   if (tile) return tile;
-  tile = await fallback(config.json, layer, coords);
+  tile = await fallback(config, layer, coords);
   await putTile(path, coords, tile.buffer);
   return tile;
 }
