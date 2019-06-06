@@ -1,12 +1,12 @@
 const tilestacker = require("./tilestacker");
 
 module.exports = function(app, config) {
-  app.get("/", res => {
+  app.get("/", (req, res) => {
     res.send(config);
   });
   app.get("*?", (req, res, next) => {
     tilestacker
-      .get(decodeURIComponent(req.path))
+      .get(decodeURIComponent(req.path), config)
       .then(node => {
         if (!node) return next();
         if (!node.contentType) return next();
