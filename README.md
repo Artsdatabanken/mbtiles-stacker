@@ -23,8 +23,8 @@ Put one or more .mbtiles inside the data subfolder.
 Execute:
 
 ```
-yarn
-yarn start
+npm install
+npm run start
 ```
 
 Navigate to http://localhost:8000/ to display a summary of the tile sets.
