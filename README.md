@@ -7,8 +7,6 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md#pull-requests)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
-[![Screenshot](doc/screenshot.png "ratatouille screenshot")](https://maps.artsdatabanken.no)
-
 Demo: [mbtiles-stacker](https://maps.artsdatabanken.no)
 
 mbtiles-stacker is a minimal raster tile composer. It can read multiple source mbtiles and stack the images into one tileset. Supports .mbtiles containing rasters of .png, .jpg.
