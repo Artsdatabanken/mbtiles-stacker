@@ -13,13 +13,10 @@ Demo: [mbtiles-stacker](https://maps.artsdatabanken.no)
 
 mbtiles-stacker is a minimal raster tile composer. It can read multiple source mbtiles and stack the images into one tileset. Supports .mbtiles containing rasters of .png, .jpg.
 
-## Features
+## Upstream formats
 
-- Supports thousands of tile sets
-- Raster tiles (MBTiles)
-  - Serve png or jpg raster tiles
-- Static files
-  - Can serve any other file statically
+- Raster tiles (x,y,z)
+- WMS-C (tilematrixset,tilerow,tilecol)
 
 ## Installation
 
