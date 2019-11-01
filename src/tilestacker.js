@@ -15,7 +15,8 @@ async function get(path, config) {
 
 function decodePath(path) {
   const segments = parsePath(path);
-  if (segments.length !== 4) return {};
+  if (segments.length !== 5) return {};
+  segments.shift();
   const layerName = segments.shift();
   const coords = {
     z: readInt(segments, 0),

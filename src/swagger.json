@@ -1,0 +1,90 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Bakgrunnskart for bruk i dynamiske kartløsninger.\n[https://bakgrunnskart.artsdatabanken.no/](https://bakgrunnskart.artsdatabanken.no/) or on \n[https://artsdatabanken.slack.com/, #åpnedata](https://artsdatabanken.slack.com/).\n",
+    "version": "1.0.0",
+    "title": "Bakgrunnskart",
+    "contact": {
+      "email": "bjorn.reppen@artsdatabanken.no"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "basePath": "/v1",
+  "schemes": ["http", "https"],
+  "paths": {
+    "/layers": {
+      "get": {
+        "summary": "List available layers",
+        "description": "",
+        "operationId": "getLayers",
+        "produces": ["application/json"],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid status value"
+          }
+        }
+      }
+    },
+    "/{layer}/{z}/{x}/{y}": {
+      "get": {
+        "summary": "Base map image tile",
+        "description": "",
+        "operationId": "getTile",
+        "produces": ["image/*"],
+        "parameters": [
+          {
+            "name": "layer",
+            "in": "path",
+            "description": "The name of the map layer",
+            "required": true,
+            "default": "egk_topo4graatone",
+            "type": "string"
+          },
+          {
+            "name": "z",
+            "in": "path",
+            "description": "Zoom (0-21)",
+            "required": true,
+            "default": 12,
+            "type": "number"
+          },
+          {
+            "name": "x",
+            "in": "path",
+            "description": "X tile coordinate (0-...)",
+            "required": true,
+            "default": 2153,
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "in": "path",
+            "description": "Y tile coordinate (0-...)",
+            "required": true,
+            "default": 1108,
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid status value"
+          }
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about romlig-api on GitHub",
+    "url": "https://github.com/Artsdatabanken/romlig-api"
+  }
+}

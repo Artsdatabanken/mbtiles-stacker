@@ -1,10 +1,10 @@
 const tilestacker = require("./tilestacker");
 
 module.exports = function(app, config) {
-  app.get("/", (req, res) => {
+  app.get("/config", (req, res) => {
     res.send(config.json);
   });
-  app.get("*?", (req, res, next) => {
+  app.get("/v1/*?", (req, res, next) => {
     tilestacker
       .get(decodeURIComponent(req.path), config)
       .then(node => {
