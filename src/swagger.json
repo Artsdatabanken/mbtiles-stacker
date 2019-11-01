@@ -13,7 +13,7 @@
     }
   },
   "basePath": "/v1",
-  "schemes": ["http", "https"],
+  "schemes": ["https"],
   "paths": {
     "/layers": {
       "get": {
