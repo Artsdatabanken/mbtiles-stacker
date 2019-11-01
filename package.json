@@ -7,15 +7,15 @@
     "node": ">=10.0.0"
   },
   "devDependencies": {
-    "coveralls": "^3.0.6",
-    "eslint": "^6.5.1",
-    "eslint-config-prettier": "^6.4.0",
+    "coveralls": "^3.0.7",
+    "eslint": "^6.6.0",
+    "eslint-config-prettier": "^6.5.0",
     "eslint-plugin-prettier": "^3.1.1",
-    "husky": "^3.0.8",
+    "husky": "^3.0.9",
     "jest": "^24.9.0",
-    "nodemon": "^1.19.3",
+    "nodemon": "^1.19.4",
     "prettier": "^1.18.2",
-    "pretty-quick": "^1.11.1"
+    "pretty-quick": "^2.0.0"
   },
   "scripts": {
     "start": "node index.js --port 8000 data/",
@@ -28,11 +28,12 @@
     "better-sqlite3": "^5.4.3",
     "canvas": "^2.6.0",
     "express": "^4.17.1",
-    "jimp": "^0.8.4",
+    "jimp": "^0.8.5",
     "log-less-fancy": "^1.4.0",
     "minimist": "^1.2.0",
     "node-fetch": "^2.6.0",
-    "pbf": "^3.2.0",
+    "pbf": "^3.2.1",
+    "swagger-ui-express": "^4.1.2",
     "zlib": "^1.0.5"
   },
   "husky": {
