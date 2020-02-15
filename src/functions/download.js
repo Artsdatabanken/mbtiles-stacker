@@ -7,17 +7,18 @@ async function download(config, layer, coords) {
   url = url.replace("{y}", coords.y);
   url = url.replace("{x}", coords.x);
   log.info(url);
-  try {
-    return { buffer: await fetchImage(url) };
-  } catch (e) {
-    throw new Error(e);
-  }
+  return { buffer: await fetchImage(url) };
 }
 
 async function fetchImage(url) {
   const response = await fetch(url);
-  if (response.status !== 200)
-    throw new Error(`HTTP ${response.status}: ${url}`);
+
+  if (response.status !== 200) {
+    const err = new Error();
+    err.status = response.status;
+    err.message = url + ": " + response.statusText;
+    throw err;
+  }
   const buff = await response.buffer();
   return buff;
 }

@@ -6,7 +6,6 @@ const tilepath = (dataDirectory, layerName) =>
 
 async function getTile(config, layer, coords, fallback) {
   const path = tilepath(config.dataDirectory, layer.name);
-  console.log(path);
   let tile = await dbGetTile(path, coords);
   if (tile) return tile;
   tile = await fallback(config, layer, coords);

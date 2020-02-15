@@ -40,7 +40,7 @@ class Mbtiles {
     const dbRow = dbrow(zoom, row);
     const record = this.getCommand().get(zoom, column, dbRow);
     if (record) log.info(`Found ${this.db.name}/${zoom},${column},${dbRow}`);
-    return record && new Buffer(record.tile_data);
+    return record && record.tile_data && new Buffer(record.tile_data);
   }
 
   async writeTile(tileCoord, arrayBuffer) {
@@ -49,11 +49,7 @@ class Mbtiles {
     const column = tileCoord.x;
     const dbRow = dbrow(zoom, row);
     const buffer = arrayBuffer;
-    try {
-      this.putCommand().run(zoom, column, dbRow, buffer);
-    } catch (e) {
-      console.error(`/${zoom}/${column}/${dbRow}: ${e}`);
-    }
+    this.putCommand().run(zoom, column, dbRow, buffer);
   }
 
   writeMetadata(meta) {

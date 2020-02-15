@@ -1,50 +1,45 @@
-const express = require("express");
-const log = require("log-less-fancy")();
-const minimist = require("minimist");
-const routes = require("./src/routes");
-const pjson = require("./package.json");
-const path = require("path");
+const { send, sendError } = require("micro");
+const config = require("./data/config");
 const swagger = require("./src/swagger");
+const v1 = require("./v1");
+const pjson = require("./package");
 
-var argv = minimist(process.argv.slice(2), { alias: { p: "port" } });
-if (argv._.length !== 1) {
-  console.log("Usage: node index.js [options] [rootDirectory]");
-  console.log("");
-  console.log("rootDirectory    Data directory containing .mbtiles");
-  console.log("");
-  console.log("Options:");
-  console.log("   -p PORT --port PORT       Set the HTTP port [8000]");
-  console.log("");
-  console.log("A root directory is required.");
-  process.exit(1);
-}
+config.dataDirectory = "./data/";
 
-const app = express();
-const config = { dataDirectory: path.resolve(argv._[0]) };
-config.json = require(path.join(config.dataDirectory, "config"));
+process.on("unhandledRejection", (a, b, c) => {
+  console.error("unhandledRejection", a, b, c);
+});
 
-app.use(function(req, res, next) {
-  res.header("X-Powered-By", "mbtiles-stacker v" + pjson.version);
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Credentials", "true");
-  res.header("Access-Control-Allow-Methods", "GET");
-  res.header("Access-Control-Expose-Headers", "Content-Length");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Accept, Authorization, Content-Type, X-Requested-With"
-  );
-  if (req.method === "OPTIONS") {
-    return res.send(200);
-  } else {
-    return next();
+const redirect = (location, res) => {
+  res.setHeader("Location", location);
+  send(res, 301, "");
+};
+
+module.exports = async (req, res) => {
+  try {
+    res.setHeader("X-Powered-By", "mbtiles-stacker v" + pjson.version);
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Credentials", "true");
+    res.setHeader("Access-Control-Allow-Methods", "GET");
+    res.setHeader("Access-Control-Expose-Headers", "Content-Length");
+    res.setHeader(
+      "Access-Control-Allow-Headers",
+      "Accept, Authorization, Content-Type, X-Requested-With"
+    );
+    console.log(req.method);
+    if (req.method === "OPTIONS") return res.send(200);
+
+    const parts = decodeURIComponent(req.url)
+      .split(/\//g)
+      .filter(x => x.length > 0);
+    const [version, ...rest] = parts;
+    console.log(version, rest);
+    if (version === "swagger") return swagger(parts[1], res);
+
+    if (version === "v1")
+      return await v1(rest, res).catch(e => sendError(req, res, e));
+    return redirect("/swagger/", res);
+  } catch (e) {
+    return e;
   }
-});
-
-const port = argv.port || 8000;
-
-routes(app, config);
-swagger.init(app);
-
-app.listen(port, () => {
-  log.info("Server listening on port " + port);
-});
+};

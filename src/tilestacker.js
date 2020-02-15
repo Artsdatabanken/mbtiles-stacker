@@ -1,42 +1,32 @@
 const tileproxy = require("./tileproxy");
 const functions = require("./functions");
 
-async function get(path, config) {
+async function get(config, layerName, z, x, y) {
   config.getModeFunction = functions.getModeFunction;
-  const { layerName, coords } = decodePath(path);
-  let layer = config.json[layerName];
+  let layer = config[layerName];
   if (!layer) return null;
   layer.name = layerName;
+  const coords = parseCoords(z, x, y);
   const tile = await tileproxy.getTile(config, layer, coords);
+
   if (!tile) return null;
   tile.contentType = "image/png";
   return tile;
 }
 
-function decodePath(path) {
-  const segments = parsePath(path);
-  if (segments.length !== 5) return {};
-  segments.shift();
-  const layerName = segments.shift();
+function parseCoords(z, x, y) {
   const coords = {
-    z: readInt(segments, 0),
-    x: readInt(segments, 1),
-    y: readInt(segments, 2)
+    z: readInt(z),
+    x: readInt(x),
+    y: readInt(y)
   };
-  return { layerName, coords };
+  return coords;
 }
 
-function readInt(segments, index) {
-  const v = parseInt(segments[index]);
+function readInt(str) {
+  const v = parseInt(str);
   if (isNaN(v)) throw new Error("Bad arguments: " + segments.join(","));
   return v;
-}
-
-function parsePath(relativePath) {
-  if (!relativePath) return [];
-  const parts = relativePath.split("/");
-  while (parts.length > 0 && parts[0] == "") parts.shift();
-  return parts;
 }
 
 module.exports = { get };
