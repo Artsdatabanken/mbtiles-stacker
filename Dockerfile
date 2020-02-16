@@ -9,7 +9,8 @@ FROM node:10
 RUN groupadd -r --gid 1007 dockerrunner && useradd -r -g dockerrunner dockerrunner
 WORKDIR /app
 COPY --from=dep /node_modules ./node_modules
-EXPOSE 8000
+EXPOSE 3000
 ADD . .
 USER dockerrunner
-CMD [ "node", "index.js", "--port", "8000", "/data/" ]
+CMD [ "node", "node_modules/micro/bin/micro.js/", "-l", "tcp://0.0.0.0:8000"]
+
