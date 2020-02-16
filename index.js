@@ -12,7 +12,9 @@ function findDataDir() {
 }
 
 const dataDirectory = findDataDir();
-const config = fs.readFileSync(path.join(dataDirectory, "config.json"));
+const config = JSON.parse(
+  fs.readFileSync(path.join(dataDirectory, "config.json"))
+);
 config.dataDirectory = dataDirectory;
 
 process.on("unhandledRejection", (a, b, c) => {
@@ -48,7 +50,7 @@ const doit = async (req, res) => {
     if (version === "swagger") return await swagger(parts[1], req, res);
 
     if (version === "v1")
-      return await v1(rest, res).catch(e => sendError(req, res, e));
+      return await v1(config, rest, res).catch(e => sendError(req, res, e));
     return redirect("/swagger/", res);
   } catch (e) {
     return e;
