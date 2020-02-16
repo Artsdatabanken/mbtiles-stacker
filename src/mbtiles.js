@@ -49,7 +49,11 @@ class Mbtiles {
     const column = tileCoord.x;
     const dbRow = dbrow(zoom, row);
     const buffer = arrayBuffer;
-    this.putCommand().run(zoom, column, dbRow, buffer);
+    try {
+      this.putCommand().run(zoom, column, dbRow, buffer);
+    } catch (e) {
+      console.warn(`Tile ${zoom}/${row}/${column}' already written.`);
+    }
   }
 
   writeMetadata(meta) {
