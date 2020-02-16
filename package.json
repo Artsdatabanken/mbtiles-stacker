@@ -1,7 +1,7 @@
 {
   "name": "mbtiles-stacker",
-  "description": "Tiny raster+vector tiles and static file server.",
-  "version": "1.5.1",
+  "description": "Map tile composer.",
+  "version": "1.5.2",
   "main": "index.js",
   "engines": {
     "node": ">=10.0.0"

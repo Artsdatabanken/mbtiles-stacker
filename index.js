@@ -1,10 +1,19 @@
 const { send, sendError } = require("micro");
-const config = require("./data/config");
 const swagger = require("./src/swagger");
 const v1 = require("./v1");
 const pjson = require("./package");
 
-config.dataDirectory = "./data/";
+const fs = require("fs");
+const path = require("path");
+function findDataDir() {
+  if (fs.existsSync("./data")) return "./data";
+  if (fs.existsSync("/data")) return "/data";
+  throw new Error("Could not find ./data or /data");
+}
+
+const dataDirectory = findDataDir();
+const config = fs.readFileSync(path.join(dataDirectory, "config.json"));
+config.dataDirectory = dataDirectory;
 
 process.on("unhandledRejection", (a, b, c) => {
   console.error("unhandledRejection", a, b, c);
