@@ -30,7 +30,7 @@
     "jimp": "^0.9.3",
     "log-less-fancy": "^1.4.0",
     "micro": "^9.3.4",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.7",
     "pbf": "^3.2.1",
     "zlib": "^1.0.5"
   },
