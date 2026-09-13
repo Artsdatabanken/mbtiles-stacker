@@ -5,6 +5,12 @@ const pjson = require("./package");
 
 const fs = require("fs");
 const path = require("path");
+
+/**
+ * Entry point for the mbtiles-stacker service.
+ * It resolves the runtime data directory, loads the layer configuration,
+ * and delegates HTTP requests to the Swagger or v1 API handlers.
+ */
 function findDataDir() {
   if (fs.existsSync("./data")) return "./data";
   if (fs.existsSync("/data")) return "/data";
@@ -21,11 +27,20 @@ process.on("unhandledRejection", (a, b, c) => {
   console.error("unhandledRejection", a, b, c);
 });
 
+/**
+ * Redirects the client to the Swagger UI by default.
+ * This keeps the HTTP entry point simple while exposing a browsable API.
+ */
 const redirect = (location, res) => {
   res.setHeader("Location", location);
   send(res, 301);
 };
 
+/**
+ * Main HTTP handler for the micro service.
+ * It adds the standard CORS headers and routes requests either to the
+ * Swagger docs or to the v1 tile API.
+ */
 module.exports = async (req, res) => {
   res.setHeader("X-Powered-By", "mbtiles-stacker v" + pjson.version);
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -41,6 +56,11 @@ module.exports = async (req, res) => {
   const r = await doit(req, res);
   return r;
 };
+
+/**
+ * Splits the request URL into version and route segments, then dispatches
+ * to the matching route handler.
+ */
 const doit = async (req, res) => {
   try {
     const parts = decodeURIComponent(req.url)

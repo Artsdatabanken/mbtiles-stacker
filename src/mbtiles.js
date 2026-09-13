@@ -1,7 +1,14 @@
+/**
+ * Thin wrapper around an MBTiles SQLite database.
+ * The class handles both metadata setup and tile reads/writes for the
+ * raster layer cache that backs the stacker service.
+ */
 const log = require("log-less-fancy")();
 const Database = require("better-sqlite3");
 const fs = require("fs");
 
+// MBTiles stores tile rows in TMS order, so this converts the requested row
+// into the underlying SQLite coordinate before lookup.
 const dbrow = (zoom, row) => (Math.pow(2, zoom) - 1 - row).toString();
 
 class Mbtiles {
@@ -19,6 +26,9 @@ class Mbtiles {
     this.db.close();
   }
 
+  /**
+   * Prepares the query used to fetch a single tile by zoom, x and y.
+   */
   getCommand() {
     if (this.getcmd) return this.getcmd;
     this.getcmd = this.db.prepare(
@@ -33,6 +43,9 @@ class Mbtiles {
     return this.putcmd;
   }
 
+  /**
+   * Reads a tile from the SQLite store using the MBTiles row conversion.
+   */
   getTile(tileCoord) {
     const zoom = tileCoord.z;
     const row = tileCoord.y;
@@ -43,6 +56,10 @@ class Mbtiles {
     return record && record.tile_data && new Buffer(record.tile_data);
   }
 
+  /**
+   * Saves a tile buffer back to the MBTiles database.
+   * Duplicate inserts are ignored to keep caching idempotent.
+   */
   async writeTile(tileCoord, arrayBuffer) {
     const zoom = tileCoord.z;
     const row = tileCoord.y;
@@ -56,6 +73,9 @@ class Mbtiles {
     }
   }
 
+  /**
+   * Writes metadata values into the MBTiles metadata table.
+   */
   writeMetadata(meta) {
     const merged = Object.assign({}, defaultMetadata, meta);
     Object.entries(merged).forEach(([name, value]) =>

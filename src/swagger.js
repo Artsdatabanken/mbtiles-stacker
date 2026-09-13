@@ -1,3 +1,7 @@
+/**
+ * Simple static file wrapper for the bundled Swagger UI.
+ * It serves files from the local swagger directory with the correct content type.
+ */
 const { sendError } = require("micro");
 const path = require("path");
 const fs = require("fs").promises;
@@ -10,6 +14,9 @@ const mimeTypes = {
   css: "text/css"
 };
 
+/**
+ * Load a file from the swagger asset directory and return it as a response.
+ */
 const swagger = async (file = "index.html", req, res) => {
   const basePath = path.resolve("./swagger");
   const fpath = path.join(basePath, file);

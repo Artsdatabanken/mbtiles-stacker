@@ -1,5 +1,13 @@
+/**
+ * Combines multiple raster tiles into one output image.
+ * Each incoming tile may be adjusted (transparency, contrast, color shift) and
+ * then composited over the previous tile in layer order.
+ */
 const Jimp = require("jimp");
 
+/**
+ * Read, normalize and composite all source tiles into a single PNG buffer.
+ */
 async function stackImages(tiles) {
   const stack = await readImages(tiles);
   adjust(stack);
@@ -47,7 +55,7 @@ function colorArg(out, cfg, key) {
 function makeTransparent(image, transparentColor) {
   if (!transparentColor.red) return;
   const raw = image.bitmap.data;
-  image.scan(0, 0, image.bitmap.width, image.bitmap.height, function(
+  image.scan(0, 0, image.bitmap.width, image.bitmap.height, function (
     x,
     y,
     idx

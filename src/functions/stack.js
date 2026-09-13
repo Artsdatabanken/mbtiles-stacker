@@ -1,6 +1,14 @@
+/**
+ * Stack mode.
+ * This composes one output tile from multiple source layers by fetching each
+ * layer tile and then blending them together through the image stacker.
+ */
 const stackImages = require("../stackimages");
 const tileproxy = require("../tileproxy");
 
+/**
+ * Collect all sublayers for a tile, then merge them into a single image.
+ */
 async function stack(config, layer, coords) {
   const r = [];
   const fetches = [];
