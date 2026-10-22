@@ -57,7 +57,7 @@
     }
   ],
   "dependencies": {
-    "swagger-ui": "^3.25.0"
+    "swagger-ui": "^4.1.3"
   },
   "deprecated": false,
   "description": "[![NPM version](https://badge.fury.io/js/swagger-ui-dist.svg)](http://badge.fury.io/js/swagger-ui-dist)",
